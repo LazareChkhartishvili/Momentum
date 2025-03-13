@@ -4,7 +4,7 @@ const ModeSwither = () => {
   const { darkMode, toggleDarkMode } = useTheme();
 
   return (
-    <label className="inline-flex items-center relative">
+    <label className="inline-flex items-center relative scale-90">
       <input
         className="peer hidden"
         id="toggle"
@@ -12,7 +12,7 @@ const ModeSwither = () => {
         checked={darkMode}
         onChange={toggleDarkMode}
       />
-      <div className="relative w-[110px] h-[50px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[40px] after:h-[40px] after:bg-gradient-to-r from-orange-500 to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[5px] after:left-[5px] active:after:w-[50px] peer-checked:after:left-[105px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md" />
+      <div className="relative w-[110px] h-[50px] bg-zinc-200 peer-checked:bg-zinc-800 rounded-full after:absolute after:content-[''] after:w-[40px] after:h-[40px] after:bg-gradient-to-r from-orange-500 to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[5px] after:left-[5px] active:after:w-[50px] peer-checked:after:left-[105px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md" />
       <svg
         height={0}
         width={100}
