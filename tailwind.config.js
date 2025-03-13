@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         purple: "#8338EC",
+        darkGray: "#212529",
       },
       fontFamily: {
         FiraGo: ["FiraGo", "sans-serif"],
