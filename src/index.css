@@ -1,3 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "FiraGo";
+  src: url("./assets/fonts/FiraGO-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer utilities {
+  .animate-slowSpin {
+    animation: slowSpin 2s linear infinite;
+  }
+}
