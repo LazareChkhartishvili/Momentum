@@ -7,7 +7,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 const App = () => {
   return (
     <ThemeProvider>
-      <div className="px-[120px] font-FiraGo w-full min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      <div className="px-[120px] font-FiraGo w-full min-h-screen bg-white dark:bg-zinc-800 text-black dark:text-white">
         <Header />
         <Routes>
           <Route path="/" element={<Home />}></Route>

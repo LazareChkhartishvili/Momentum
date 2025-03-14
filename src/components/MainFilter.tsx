@@ -65,7 +65,7 @@ const MainFilter = () => {
           დეპარტამენტი {dropDepartments ? <FaArrowUp /> : <FaArrowDown />}
         </button>
         {dropDepartments && (
-          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 bg-white dark:text-black dark:bg-slate-700 border-purple border rounded-[10px] w-[688px]">
+          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 bg-white dark:text-black dark:bg-slate-700 border-purple border rounded-[10px] w-[688px] h-[274px] overflow-auto">
             {departments.map((department) => {
               return (
                 <div key={department.id} className="">
@@ -90,7 +90,7 @@ const MainFilter = () => {
           პრიორიტეტები {dropPriorities ? <FaArrowUp /> : <FaArrowDown />}
         </button>
         {dropPriorities && (
-          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 transform -translate-x-[280px] z-10 bg-white border-purple border rounded-[10px] w-[688px]">
+          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 transform -translate-x-[280px] z-10 bg-white border-purple border rounded-[10px] w-[688px] ">
             {priorities.map((priority) => (
               <div
                 key={priority.id}
