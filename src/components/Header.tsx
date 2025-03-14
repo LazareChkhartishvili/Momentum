@@ -1,10 +1,14 @@
-import { Link } from "react-router";
 import hourGlass from "../assets/images/hourglass.svg";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 import ModeSwither from "./ModeSwither";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import CreateEmployer from "../components/createEmployer";
+import { Link } from "react-router";
 
 const Header = () => {
+  const [isEmployerModalOpen, setIsEmployerModalOpen] = useState(false);
+
   return (
     <header className="pt-[30px] pb-[70px] flex items-center justify-between">
       <motion.div
@@ -32,9 +36,15 @@ const Header = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="flex items-center gap-x-10">
-          <button className="py-[10px] dark:text-white px-[20px] text-darkGray border border-purple rounded-[5px] transition-all duration-300 hover:bg-purple hover:text-white">
+          <button
+            onClick={() => setIsEmployerModalOpen(true)}
+            className="py-[10px] dark:text-white px-[20px] text-darkGray border border-purple rounded-[5px] transition-all duration-300 hover:bg-purple hover:text-white"
+          >
             თანამშრომლის შექმნა
           </button>
+          {isEmployerModalOpen && (
+            <CreateEmployer closeModal={() => setIsEmployerModalOpen(false)} />
+          )}
           <Link
             to={"/addTask"}
             className="flex items-center gap-2 py-[10px] px-[20px] text-white bg-purple border border-purple rounded-[5px] transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-600 hover:to-purple-400 hover:shadow-lg hover:scale-105 active:scale-95"

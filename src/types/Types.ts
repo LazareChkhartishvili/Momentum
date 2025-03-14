@@ -13,3 +13,23 @@ export type Priority = {
   name: string;
   icon: string;
 };
+
+export type Employee = {
+  id: number;
+  name: string;
+  surname: string;
+  avatar: string;
+  department: Department;
+};
+
+export type Task = {
+  id: number;
+  name: string;
+  description: string;
+  due_date: string;
+  department: Department;
+  employee: Employee;
+  status: Status;
+  priority: Priority;
+  total_comments: number;
+};
