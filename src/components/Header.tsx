@@ -3,8 +3,9 @@ import { FaPlus } from "react-icons/fa";
 import ModeSwither from "./ModeSwither";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import CreateEmployer from "../components/createEmployer";
+
 import { Link } from "react-router";
+import CreateEmployer from "./CreateEmployer";
 
 const Header = () => {
   const [isEmployerModalOpen, setIsEmployerModalOpen] = useState(false);

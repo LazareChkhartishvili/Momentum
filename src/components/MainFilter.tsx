@@ -3,7 +3,6 @@ import axiosInstance from "../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { Department, Priority } from "../types/Types";
 import { FaArrowUp } from "react-icons/fa6";
-import check from "../assets/images/check.svg";
 import emptyCheck from "../assets/images/emptycheck.svg";
 
 const MainFilter = () => {
@@ -19,6 +18,12 @@ const MainFilter = () => {
   const fetchDepartments = async () => {
     try {
       const response = await axiosInstance.get("/departments");
+      console.log(
+        loadingDepartments,
+        loadingPriorities,
+        errorDepartments,
+        errorPriorities
+      );
       setDepartments(response.data);
       console.log(response.data);
     } catch (error: any) {
