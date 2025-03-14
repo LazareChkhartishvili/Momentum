@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import AddTask from "./pages/AddTask";
 import { ThemeProvider } from "./context/ThemeContext";
+import SingleTask from "./pages/SingleTask";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/addTask" element={<AddTask />}></Route>
+          <Route path="/task/:id" element={<SingleTask />}></Route>
         </Routes>
       </div>
     </ThemeProvider>
