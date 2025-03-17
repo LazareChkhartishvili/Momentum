@@ -165,7 +165,9 @@ const SingleTask = () => {
             დააკომენტარე
           </button>
         </div>
-        <h2>კომენტარები</h2>
+        <div className="px-[45px]">
+          <h2 className="font-medium text-[20px] text-black">კომენტარები</h2>
+        </div>
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ const StatusList = () => {
   }
 
   return (
-    <div className="mt-[72px] grid gap-[52px] grid-cols-4 w-full">
+    <div className="mt-[72px] grid gap-[52px] grid-cols-4 w-full mb-40">
       {statuses.map((status) => {
         const filteredTasks = tasks.filter(
           (task) => task.status.name === status.name
