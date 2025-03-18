@@ -1,25 +1,6 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
-
-interface Department {
-  id: number;
-  name: string;
-}
-
-interface Status {
-  id: number;
-  name: string;
-}
-
-interface Priority {
-  id: number;
-  name: string;
-}
-
-interface Employee {
-  id: number;
-  fullName: string;
-}
+import { Department, Employee, Priority, Status } from "../types/Types";
 
 const AddTask = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
