@@ -1,36 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-const schema = yup
-  .object({
-    firstName: yup
-      .string()
-      .min(2, "მინიმუმ 2 სიმბოლო უნდა იყოს")
-      .max(255, "მაქსიმუმ 255 სიმბოლო უნდა იყოს")
-      .required("სახელი აუცილებელია"),
-    lastName: yup
-      .string()
-      .min(2, "მინიმუმ 2 სიმბოლო უნდა იყოს")
-      .max(255, "მაქსიმუმ 255 სიმბოლო უნდა იყოს")
-      .required("გვარი აუცილებელია"),
-  })
-  .required();
+import { FaUpload } from "react-icons/fa";
+import { Department } from "../types/Types";
+import axiosInstance from "../utils/axiosInstance";
 
 const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [image, setImage] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -48,126 +36,115 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     };
   }, [closeModal]);
 
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      const departmentsRes = await axiosInstance.get("/departments");
+      setDepartments(departmentsRes.data);
+    };
+    fetchDepartments();
+  }, []);
+
   const onSubmit = (data: any) => {
     console.log(data);
   };
-
-  // Watch for input changes
-  const firstName = watch("firstName");
-  const lastName = watch("lastName");
 
   return (
     <div className="fixed inset-0 backdrop-blur bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="bg-white w-[913px] h-[713px] rounded-lg shadow-lg relative z-10 pt-10 px-[50px] pb-[60px]"
+        className="bg-white w-[913px] rounded-lg shadow-lg relative z-10 pt-10 px-[50px] pb-[60px]"
       >
         <IoMdCloseCircleOutline
           onClick={closeModal}
           size={40}
           className="text-gray-500 hover:text-red-500 cursor-pointer duration-500 absolute right-[50px] top-10"
         />
-        <h1 className="text-center mt-[117px] font-medium text-[32px] text-darkGray">
+        <h1 className="text-center mt-[37px] font-medium text-[32px] text-darkGray">
           თანამშრომლის დამატება
         </h1>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
-          <div className="flex flex-row items-center w-full justify-between">
-            <div className="mb-5">
-              <label htmlFor="firstName" className="block text-lg">
-                სახელი
-              </label>
+        <form className="mt-[45px]">
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-col gap-1">
+              <label>სახელი*</label>
               <input
-                id="firstName"
+                className="w-[385px] mb-2 border border-[#CED4DA] rounded-md h-[42px] pl-2 focus:outline-none"
                 type="text"
-                {...register("firstName")}
-                className="mt-2 p-2 border rounded-md w-[383px]"
+                placeholder="შეიყვანეთ სახელი"
               />
-              <div className="mt-2">
-                {errors.firstName ? (
-                  <span className="text-red-500">
-                    {errors.firstName.message}
-                  </span>
-                ) : (
-                  <div className="flex flex-col">
-                    <span
-                      className={`${
-                        firstName && firstName.length < 2
-                          ? "text-red-500"
-                          : firstName && firstName.length >= 2
-                          ? "text-green-500"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      მინიმუმ 2 სიმბოლო
-                    </span>
-                    <span
-                      className={`${
-                        firstName && firstName.length > 255
-                          ? "text-red-500"
-                          : firstName && firstName.length <= 255
-                          ? "text-green-500"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      მაქსიმუმ 255 სიმბოლო
-                    </span>
-                  </div>
-                )}
-              </div>
+              <span className="text-[#6C757D] text-[11px]">
+                მინიმუმ 2 სიმბოლო
+              </span>
+              <span className="text-[#6C757D] text-[11px]">
+                მაქსიმუმ 255 სიმბოლო
+              </span>
             </div>
-
-            <div className="mb-5">
-              <label htmlFor="lastName" className="block text-lg">
-                გვარი
-              </label>
+            <div className="flex flex-col gap-1">
+              <label>გვარი*</label>
               <input
-                id="lastName"
+                className="w-[385px] mb-2 border border-[#CED4DA] rounded-md h-[42px] pl-2 focus:outline-none"
                 type="text"
-                {...register("lastName")}
-                className="mt-2 p-2 border rounded-md w-[383px]"
+                placeholder="შეიყვანეთ სახელი"
               />
-              <div className="mt-2">
-                {errors.lastName ? (
-                  <span className="text-red-500">
-                    {errors.lastName.message}
-                  </span>
-                ) : (
-                  <div className="flex flex-col">
-                    <span
-                      className={`${
-                        lastName && lastName.length < 2
-                          ? "text-red-500"
-                          : lastName && lastName.length >= 2
-                          ? "text-green-500"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      მინიმუმ 2 სიმბოლო
-                    </span>
-                    <span
-                      className={`${
-                        lastName && lastName.length > 255
-                          ? "text-red-500"
-                          : lastName && lastName.length <= 255
-                          ? "text-green-500"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      მაქსიმუმ 255 სიმბოლო
-                    </span>
-                  </div>
-                )}
-              </div>
+              <span className="text-[#6C757D] text-[11px]">
+                მინიმუმ 2 სიმბოლო
+              </span>
+              <span className="text-[#6C757D] text-[11px]">
+                მაქსიმუმ 255 სიმბოლო
+              </span>
             </div>
           </div>
-
-          <button
-            type="submit"
-            className="w-full mt-5 p-2 bg-blue-500 text-white rounded-md"
-          >
-            შევავსო
-          </button>
+          {/* Avatar */}
+          <div className="mt-[45px]">
+            <h2>ავატარი*</h2>
+            <label className="border border-dashed h-[120px] border-[#CED4DA] rounded-[8px] mt-2 flex items-center justify-center cursor-pointer">
+              {image ? (
+                <img
+                  src={image}
+                  alt="Uploaded"
+                  className="h-[90px] w-[90px] rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex flex-col items-center text-gray-500">
+                  <FaUpload className="text-2xl" />
+                  <span className="text-sm mt-1">ატვირთეთ ფოტო</span>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
+          </div>
+          {/* Department */}
+          <div className="mt-[45px]">
+            <div className="flex flex-col col-span-2">
+              <label htmlFor="department">დეპარტამენტი*</label>
+              <select
+                id="department"
+                className="w-[550px] py-2 border border-[#DEE2E6] rounded-[5px] pl-2 mt-[6px] focus:outline-none bg-white"
+              >
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.id}>
+                    {dept.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {/* Buttons */}
+          <div className="mt-[45px] flex flex-row w-full items-center justify-end gap-[22px]">
+            <button
+              onClick={closeModal}
+              className="flex items-center justify-center text-center rounded-[5px] h-[42px] px-4 bg-transparent border border-purple text-darkGray"
+            >
+              გაუქმება
+            </button>
+            <button className="flex items-center justify-center text-center rounded-[5px] h-[42px] bg-purple text-white px-[20px]">
+              დაამატე თანამშრომელი
+            </button>
+          </div>
         </form>
       </div>
     </div>
