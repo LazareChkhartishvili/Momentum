@@ -15,6 +15,7 @@ export type Priority = {
 };
 
 export type Employee = {
+  fullName: string;
   id: number;
   name: string;
   surname: string;
