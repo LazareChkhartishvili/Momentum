@@ -14,7 +14,7 @@ const SingleTask = () => {
   const [commentText, setCommentText] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
   const [statuses, setStatuses] = useState<any[]>([]);
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [, setSelectedStatus] = useState<string>("");
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -132,7 +132,7 @@ const SingleTask = () => {
 
   return (
     <div className="flex flex-row justify-between items-start">
-      <div className="flex flex-col">
+      <div className="flex flex-col  w-[600px]">
         <div className="flex flex-row items-center gap-[18px]">
           <div
             className={`border flex items-center gap-1 py-1 px-2 font-medium rounded-md w-[110px] ${
@@ -184,7 +184,7 @@ const SingleTask = () => {
             დავალების დეტალები
           </h2>
         </div>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 ">
           <div className="flex flex-row items-center justify-between max-w-[493px]">
             <div className="flex items-center gap-3">
               <img src={statusIcon} alt="statusIcon" />
@@ -193,10 +193,14 @@ const SingleTask = () => {
             <select
               value={task.status.id}
               onChange={handleStatusChange}
-              className="border border-gray-300 p-2 rounded-md"
+              className="border border-gray-300 p-2 rounded-md dark:text-black"
             >
               {statuses.map((status) => (
-                <option key={status.id} value={status.id}>
+                <option
+                  className="dark:text-black"
+                  key={status.id}
+                  value={status.id}
+                >
                   {status.name}
                 </option>
               ))}
@@ -254,10 +258,10 @@ const SingleTask = () => {
         </div>
       </div>
       {/* Comments Section */}
-      <div className="w-[741px] min-h-[400px] pb-20 bg-[#F8F3FE] rounded-[10px]">
+      <div className="w-[741px] min-h-[400px] pb-20 bg-[#F8F3FE] dark:bg-gray-700 rounded-[10px]">
         <div className="pt-10 px-[45px] pb-[52px] relative">
           <textarea
-            className="w-[651px] min-h-[135px] border border-[#898989] pt-6 pl-5 rounded-[10px] focus:outline-none"
+            className="w-[651px] min-h-[135px] border dark:text-black border-[#898989] pt-6 pl-5 rounded-[10px] focus:outline-none"
             placeholder="დაწერეთ კომენტარი"
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
@@ -270,7 +274,7 @@ const SingleTask = () => {
           </button>
         </div>
         <div className="px-[45px]">
-          <h2 className="font-medium text-[20px] text-black">
+          <h2 className="font-medium text-[20px] dark:text-white text-black">
             კომენტარები{" "}
             <span className="bg-purple px-[15px] text-[15px] text-white py-[4px] rounded-full">
               {comments.length}
@@ -286,13 +290,15 @@ const SingleTask = () => {
                     className="w-[38px] h-[38px] rounded-full mr-3"
                   />
                   <div>
-                    <p className="text-darkGray text-lg font-medium">
+                    <p className="text-darkGray dark:text-white text-lg font-medium">
                       {comment.author_nickname}
                     </p>
-                    <p className="text-darkGray">{comment.text}</p>
+                    <p className="text-darkGray dark:text-gray-400">
+                      {comment.text}
+                    </p>
                   </div>
                 </div>
-                <span>უპასუხე</span>
+                {/* <span>უპასუხე</span> */}
               </div>
             ))}
           </div>

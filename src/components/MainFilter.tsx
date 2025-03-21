@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Department, Priority } from "../types/Types";
 import { FaArrowUp } from "react-icons/fa6";
 import emptyCheck from "../assets/images/emptycheck.svg";
+import { motion } from "framer-motion";
 
 const MainFilter = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -61,60 +62,67 @@ const MainFilter = () => {
   };
 
   return (
-    <div className="mt-[52px] w-[688px]  border border-[#DEE2E6] rounded-[10px] flex items-center justify-between py-3">
-      <div className="relative">
-        <button
-          onClick={toggleDepartmentDropdown}
-          className="px-[18px] flex items-center gap-1 dark:text-white text-darkGray"
-        >
-          დეპარტამენტი {dropDepartments ? <FaArrowUp /> : <FaArrowDown />}
-        </button>
-        {dropDepartments && (
-          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 bg-white dark:text-black dark:bg-slate-700 border-purple border rounded-[10px] w-[688px] h-[274px] overflow-auto">
-            {departments.map((department) => {
-              return (
-                <div key={department.id} className="">
-                  <button className="flex gap-2 items-center">
-                    <img src={emptyCheck} alt="emptyCheckIcon" />
-                    <span>{department.name}</span>
-                  </button>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <div className="mt-[52px] w-[688px]  border border-[#DEE2E6] rounded-[10px] flex items-center justify-between py-3">
+        <div className="relative">
+          <button
+            onClick={toggleDepartmentDropdown}
+            className="px-[18px] flex items-center gap-1 dark:text-white text-darkGray"
+          >
+            დეპარტამენტი {dropDepartments ? <FaArrowUp /> : <FaArrowDown />}
+          </button>
+          {dropDepartments && (
+            <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 bg-white dark:text-black dark:bg-slate-700 border-purple border rounded-[10px] w-[688px] h-[274px] overflow-auto">
+              {departments.map((department) => {
+                return (
+                  <div key={department.id} className="">
+                    <button className="flex gap-2 items-center">
+                      <img src={emptyCheck} alt="emptyCheckIcon" />
+                      <span>{department.name}</span>
+                    </button>
+                  </div>
+                );
+              })}
+              <button className="items-end text-end flex mx-auto justify-end mr-[30px] py-2 px-[48px] bg-purple  rounded-[20px] text-white w-[155px]">
+                არჩევა
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            onClick={togglePriorityDropdown}
+            className="flex items-center gap-1 dark:text-white text-darkGray "
+          >
+            პრიორიტეტები {dropPriorities ? <FaArrowUp /> : <FaArrowDown />}
+          </button>
+          {dropPriorities && (
+            <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 transform -translate-x-[280px] z-10 bg-white border-purple border rounded-[10px] w-[688px] ">
+              {priorities.map((priority) => (
+                <div
+                  key={priority.id}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <input type="checkbox" />
+                  <span>{priority.name}</span>
                 </div>
-              );
-            })}
-            <button className="items-end text-end flex mx-auto justify-end mr-[30px] py-2 px-[48px] bg-purple  rounded-[20px] text-white w-[155px]">
-              არჩევა
-            </button>
-          </div>
-        )}
-      </div>
-      <div className="relative">
-        <button
-          onClick={togglePriorityDropdown}
-          className="flex items-center gap-1 dark:text-white text-darkGray "
-        >
-          პრიორიტეტები {dropPriorities ? <FaArrowUp /> : <FaArrowDown />}
+              ))}
+              <button className="items-end text-end flex mx-auto justify-end mr-[30px] py-2 px-[48px] bg-purple rounded-[20px] text-white w-[155px]">
+                არჩევა
+              </button>
+            </div>
+          )}
+        </div>
+        <button className="pr-[18px] flex items-center gap-1 dark:text-white text-darkGray ">
+          თანამშრომელი <FaArrowDown />
         </button>
-        {dropPriorities && (
-          <div className="absolute pt-10 pl-[30px] pb-[25px] gap-y-[22px] flex flex-col top-10 left-0 transform -translate-x-[280px] z-10 bg-white border-purple border rounded-[10px] w-[688px] ">
-            {priorities.map((priority) => (
-              <div
-                key={priority.id}
-                className="flex flex-row items-center gap-2"
-              >
-                <input type="checkbox" />
-                <span>{priority.name}</span>
-              </div>
-            ))}
-            <button className="items-end text-end flex mx-auto justify-end mr-[30px] py-2 px-[48px] bg-purple rounded-[20px] text-white w-[155px]">
-              არჩევა
-            </button>
-          </div>
-        )}
       </div>
-      <button className="pr-[18px] flex items-center gap-1 dark:text-white text-darkGray ">
-        თანამშრომელი <FaArrowDown />
-      </button>
-    </div>
+    </motion.div>
   );
 };
 
