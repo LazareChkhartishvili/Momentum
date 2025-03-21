@@ -26,6 +26,7 @@ const AddTask = () => {
         setStatuses(statusesRes.data);
         setPriorities(prioritiesRes.data);
         setEmployees(employeesRes.data);
+        console.log(employeesRes.data);
       } catch (error) {
         console.error("Failed to fetch data", error);
       }
@@ -60,8 +61,8 @@ const AddTask = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       department: "",
-      priority: "", // Default value for priority
-      status: "", // Default value for status
+      priority: "",
+      status: "",
     },
   });
 
@@ -181,7 +182,7 @@ const AddTask = () => {
             >
               {employees.map((emp) => (
                 <option key={emp.id} value={emp.id} className="text-black">
-                  {emp.fullName}
+                  {emp.name} {emp.surname}
                 </option>
               ))}
             </select>

@@ -6,25 +6,26 @@ import * as yup from "yup";
 import { FaUpload } from "react-icons/fa";
 import { Department } from "../types/Types";
 import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
 
 const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
   const schema = yup.object().shape({
-    firstName: yup
+    name: yup
       .string()
       .min(2, "მინიმუმ 2 სიმბოლო")
       .max(255, "მაქსიმუმ 255 სიმბოლო")
       .required("სახელი სავალდებულოა"),
-    lastName: yup
+    surname: yup
       .string()
       .min(2, "მინიმუმ 2 სიმბოლო")
       .max(255, "მაქსიმუმ 255 სიმბოლო")
       .required("სახელი სავალდებულოა"),
-    image: yup
+    avatar: yup
       .mixed()
       .test("required", "სურათის ატვირთვა აუცილებელია", (value) => {
         return value instanceof File;
       }),
-    department: yup.string().required("დეპარტამენტი სავალდებულოა"),
+    department_id: yup.string().required("დეპარტამენტი სავალდებულოა"),
   });
 
   const {
@@ -38,16 +39,16 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     resolver: yupResolver(schema),
   });
 
-  const firstNameValue = watch("firstName");
-  const lastNameValue = watch("lastName");
+  const firstNameValue = watch("name");
+  const lastNameValue = watch("surname");
 
   const isFirstNameValid =
     firstNameValue?.length >= 2 && firstNameValue?.length <= 255;
-  const firstNameError = errors.firstName;
+  const firstNameError = errors.name;
 
   const isLastNameValid =
     lastNameValue?.length >= 2 && lastNameValue?.length <= 255;
-  const lastNameError = errors.lastName;
+  const lastNameError = errors.surname;
 
   const [departments, setDepartments] = useState<Department[]>([]);
   const [image, setImage] = useState<string | null>(null);
@@ -57,8 +58,8 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     const file = event.target.files[0];
     if (file) {
       setImage(URL.createObjectURL(file));
-      setValue("image", file);
-      trigger("image");
+      setValue("avatar", file);
+      trigger("avatar");
     }
   };
 
@@ -86,10 +87,32 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     fetchDepartments();
   }, []);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const onSubmit = async (data: any) => {
+    console.log("Data:", data);
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("surname", data.surname);
+      formData.append("department_id", data.department_id);
+      formData.append("avatar", data.avatar);
 
+      const response = await axios.post(
+        `https://momentum.redberryinternship.ge/api/employees`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer 9e6cb393-4dcc-40ae-bae5-6376c42411e6`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Response:", response.data);
+      closeModal();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
   return (
     <div className="fixed inset-0 backdrop-blur bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div
@@ -118,7 +141,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
                 }  rounded-md h-[42px] pl-2 focus:outline-none`}
                 type="text"
                 placeholder="შეიყვანეთ სახელი"
-                {...register("firstName")}
+                {...register("name")}
               />
               <span
                 className={`text-[11px] ${
@@ -155,7 +178,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
                 }  rounded-md h-[42px] pl-2 focus:outline-none`}
                 type="text"
                 placeholder="შეიყვანეთ სახელი"
-                {...register("lastName")}
+                {...register("surname")}
               />
               <span
                 className={`text-[11px] ${
@@ -186,7 +209,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
             <h2>ავატარი*</h2>
             <label
               className={`border border-dashed h-[120px]  ${
-                errors.image ? "border-red-500" : "border-[#CED4DA]"
+                errors.avatar ? "border-red-500" : "border-[#CED4DA]"
               } rounded-[8px] mt-2 flex items-center justify-center cursor-pointer`}
             >
               {image ? (
@@ -209,7 +232,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
               />
             </label>
             <p className="text-[11px] mt-2 text-red-500">
-              {errors.image ? "სურათი აუცილებელია" : ""}
+              {errors.avatar ? "სურათი აუცილებელია" : ""}
             </p>
           </div>
           {/* Department */}
@@ -219,7 +242,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
               <select
                 id="department"
                 className="w-[550px] py-2 border border-[#DEE2E6] rounded-[5px] pl-2 mt-[6px] focus:outline-none bg-white"
-                {...register("department")}
+                {...register("department_id")}
               >
                 {departments.map((dept) => (
                   <option key={dept.id} value={dept.id}>
