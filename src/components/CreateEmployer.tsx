@@ -92,7 +92,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     try {
       const formData = new FormData();
       formData.append("name", data.name);
-      formData.append("surname", data.lastName);
+      formData.append("surname", data.surname);
       formData.append("department_id", data.department_id);
       formData.append("avatar", data.avatar);
 
@@ -101,7 +101,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
         formData,
         {
           headers: {
-            Authorization: `Bearer 9e6cb393-4dcc-40ae-bae5-6376c42411e6`,
+            Authorization: `Bearer 9e7c5a1b-bfff-4529-ae5d-be8045b1de17`,
             "Content-Type": "multipart/form-data",
           },
         }
