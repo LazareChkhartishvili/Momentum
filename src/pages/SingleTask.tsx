@@ -106,7 +106,7 @@ const SingleTask = () => {
           { status_id: newStatusId },
           {
             headers: {
-              Authorization: `Bearer 9e6cb393-4dcc-40ae-bae5-6376c42411e6`,
+              Authorization: `Bearer 9e7c5a1b-bfff-4529-ae5d-be8045b1de17`,
             },
           }
         );
@@ -153,18 +153,46 @@ const SingleTask = () => {
               switch (task.department.name) {
                 case "ადამიანური რესურსების დეპარტამენტი":
                   return (
-                    <span className="bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
                       HR
                     </span>
                   );
                 case "ლოჯოსტიკის დეპარტამენტი":
                   return (
-                    <span className=" bg-[#89B6FF] text-white rounded-[15px] px-[9px] py-[5px]">
+                    <span className="ml-8 bg-[#89B6FF] text-white rounded-[15px] px-[9px] py-[5px]">
                       ლოჯისტიკა
                     </span>
                   );
-                case "ლოჯისტიკა":
-                  return <span>Logistics</span>;
+                case "ადმინისტრაციის დეპარტამენტი":
+                  return (
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                      HR
+                    </span>
+                  );
+                case "ფინანსების დეპარტამენტი":
+                  return (
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                      მარკეტინგი
+                    </span>
+                  );
+                case "გაყიდვები და მარკეტინგის დეპარტამენტი":
+                  return (
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                      მარკეტინგი
+                    </span>
+                  );
+                case "ტექნოლოგიების დეპარტამენტი":
+                  return (
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                      ტექნოლოგიების დეპარტამენტი
+                    </span>
+                  );
+                case "მედიის დეპარტამენტი":
+                  return (
+                    <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                      მედია
+                    </span>
+                  );
                 default:
                   return "";
               }
@@ -225,18 +253,46 @@ const SingleTask = () => {
                     switch (task.department.name) {
                       case "ადამიანური რესურსების დეპარტამენტი":
                         return (
-                          <span className="dark:text-white">
-                            HR დეპარტამენტი
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                            HR
                           </span>
                         );
                       case "ლოჯოსტიკის დეპარტამენტი":
                         return (
-                          <span className="dark:text-white">
-                            ლოჯისტიკის დეპარტამენტი
+                          <span className="ml-8 bg-[#89B6FF] text-white rounded-[15px] px-[9px] py-[5px]">
+                            ლოჯისტიკა
                           </span>
                         );
-                      case "ლოჯისტიკა":
-                        return <span>Logistics</span>;
+                      case "ადმინისტრაციის დეპარტამენტი":
+                        return (
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                            HR
+                          </span>
+                        );
+                      case "ფინანსების დეპარტამენტი":
+                        return (
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                            მარკეტინგი
+                          </span>
+                        );
+                      case "გაყიდვები და მარკეტინგის დეპარტამენტი":
+                        return (
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                            მარკეტინგი
+                          </span>
+                        );
+                      case "ტექნოლოგიების დეპარტამენტი":
+                        return (
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                            ტექნოლოგიების დეპარტამენტი
+                          </span>
+                        );
+                      case "მედიის დეპარტამენტი":
+                        return (
+                          <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                            მედია
+                          </span>
+                        );
                       default:
                         return "";
                     }

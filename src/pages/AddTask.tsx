@@ -58,9 +58,9 @@ const AddTask = () => {
         (value) => value && new Date(value) > new Date()
       ),
     department: yup.string().required("დეპარტამენტი სავალდებულოა"),
-    priority_id: yup.string(),
-    status_id: yup.string(),
-    employee_id: yup.string(),
+    priority_id: yup.string().required("პრიორიტეტი სავალდებულოა"),
+    status_id: yup.string().required("სტატუსი სავალდებულოა"),
+    employee_id: yup.string().required("თანამშრომელი სავალდებულოა"),
   });
 
   const {

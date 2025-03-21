@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import { Status, Task } from "../types/Types";
+import { Status, Task, Department, Priority, Employee } from "../types/Types";
 import axiosInstance from "../utils/axiosInstance";
-// import commentIcon from "../assets/images/commentIcon.svg";
 import { FaCommentAlt } from "react-icons/fa";
-import { Link } from "react-router";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
-const StatusList = () => {
+interface StatusListProps {
+  selectedDepartment: Department | null;
+  selectedPriority: Priority | null;
+  selectedEmployee: Employee | null;
+}
+
+const StatusList: React.FC<StatusListProps> = ({
+  selectedDepartment,
+  selectedPriority,
+  selectedEmployee,
+}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,12 +25,12 @@ const StatusList = () => {
     const fetchData = async () => {
       try {
         const [statusesResponse, tasksResponse] = await Promise.all([
-          axiosInstance.get("/statuses"),
-          axiosInstance.get("/tasks"),
+          axiosInstance.get<Status[]>("/statuses"),
+          axiosInstance.get<Task[]>("/tasks"),
         ]);
         setStatuses(statusesResponse.data);
         setTasks(tasksResponse.data);
-      } catch (error: any) {
+      } catch (error) {
         setError("Error Fetching Data");
         console.error("Error:", error);
       } finally {
@@ -31,6 +40,21 @@ const StatusList = () => {
 
     fetchData();
   }, []);
+
+  const filterTasks = (tasks: Task[]) => {
+    return tasks.filter((task) => {
+      const matchesDepartment = selectedDepartment
+        ? task.department.id === selectedDepartment.id
+        : true;
+      const matchesPriority = selectedPriority
+        ? task.priority.id === selectedPriority.id
+        : true;
+      const matchesEmployee = selectedEmployee
+        ? task.employee.id === selectedEmployee.id
+        : true;
+      return matchesDepartment && matchesPriority && matchesEmployee;
+    });
+  };
 
   if (loading) {
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -43,8 +67,8 @@ const StatusList = () => {
   return (
     <div className="mt-[72px] grid gap-[52px] grid-cols-4 w-full pb-40">
       {statuses.map((status) => {
-        const filteredTasks = tasks.filter(
-          (task) => task.status.name === status.name
+        const filteredTasks = filterTasks(
+          tasks.filter((task) => task.status.name === status.name)
         );
 
         return (
@@ -115,8 +139,36 @@ const StatusList = () => {
                                     ლოჯისტიკა
                                   </span>
                                 );
-                              case "ლოჯისტიკა":
-                                return <span>Logistics</span>;
+                              case "ადმინისტრაციის დეპარტამენტი":
+                                return (
+                                  <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                                    ადმ.დეპ
+                                  </span>
+                                );
+                              case "ფინანსების დეპარტამენტი":
+                                return (
+                                  <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                                    მარკეტინგი
+                                  </span>
+                                );
+                              case "გაყიდვები და მარკეტინგის დეპარტამენტი":
+                                return (
+                                  <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[9px] py-[5px]">
+                                    მარკეტინგი
+                                  </span>
+                                );
+                              case "ტექნოლოგიების დეპარტამენტი":
+                                return (
+                                  <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                                    ტექნოლოგიების დეპარტამენტი
+                                  </span>
+                                );
+                              case "მედიის დეპარტამენტი":
+                                return (
+                                  <span className="ml-8 bg-[#4075ca] text-white rounded-[15px] px-[10px] py-[5px]">
+                                    მედია
+                                  </span>
+                                );
                               default:
                                 return "";
                             }
@@ -137,7 +189,6 @@ const StatusList = () => {
                         <div className="flex items-center gap-1 text-sm">
                           <img
                             src={
-                              // task.employee.avatar ||
                               "https://static.vecteezy.com/system/resources/previews/014/194/216/non_2x/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg"
                             }
                             alt={task.employee.name}
@@ -146,7 +197,6 @@ const StatusList = () => {
                           <h4>{task.employee.name}</h4>
                         </div>
                         <div className="flex flex-row items-center gap-2">
-                          {/* <img src={commentIcon} alt="commentIcon" /> */}
                           <FaCommentAlt />
                           <span>{task.total_comments}</span>
                         </div>
