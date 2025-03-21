@@ -68,7 +68,7 @@ const StatusList = () => {
                         : task.status.name === "მზად ტესტირებისთვის"
                         ? "border-[#FF006E]"
                         : "border-[#3A86FF]"
-                    } pt-[21px] px-5 pb-5 rounded-lg shadow-md mt-2 border-2 hover:scale-105 duration-700 cursor-pointer`}
+                    } pt-[21px] px-5 pb-5 rounded-lg shadow-md mt-2 border-2  duration-700 cursor-pointer`}
                   >
                     <div className="flex flex-row items-center justify-between">
                       <div

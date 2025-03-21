@@ -92,7 +92,7 @@ const CreateEmployer = ({ closeModal }: { closeModal: () => void }) => {
     try {
       const formData = new FormData();
       formData.append("name", data.name);
-      formData.append("surname", data.surname);
+      formData.append("surname", data.lastName);
       formData.append("department_id", data.department_id);
       formData.append("avatar", data.avatar);
 

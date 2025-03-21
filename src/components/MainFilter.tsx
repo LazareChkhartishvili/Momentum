@@ -61,7 +61,7 @@ const MainFilter = () => {
   };
 
   return (
-    <div className="mt-[52px] w-[688px] border border-[#DEE2E6] rounded-[10px] flex items-center justify-between py-3">
+    <div className="mt-[52px] w-[688px]  border border-[#DEE2E6] rounded-[10px] flex items-center justify-between py-3">
       <div className="relative">
         <button
           onClick={toggleDepartmentDropdown}
